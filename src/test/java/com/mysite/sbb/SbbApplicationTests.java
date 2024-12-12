@@ -37,6 +37,6 @@ class SbbApplicationTests {
         List<Answer> answerList = q.getAnswerList();
 
         assertEquals(1, answerList.size());
-        assertEquals("네 자동으로 생성됩니다.", answerList.get(0).getConent());
+        assertEquals("네 자동으로 생성됩니다.", answerList.get(0).getContent());
     }
 }
