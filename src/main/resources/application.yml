@@ -1,0 +1,20 @@
+spring:
+  h2:
+    console:
+      enabled: 'true'  # H2 콘솔에 접속할 것인지를 묻는 항목
+      path: /h2-console  # H2 콘솔로 접속하기 위한 URL 경로
+  datasource:
+    username: sa  # 데이터베이스의 사용자명
+    url: jdbc:h2:./db_dev;MODE=MySQL  # 데이터베이스에 접속하기 위한 경로. MODE=MySQL - MySQL 문법을 사용 가능하게 함. / 파일 안생길때 생성 명령어: touch db_dev.mv.db)
+    driverClassName: org.h2.Driver  # 데이터베이스에 접속할 때 사용하는 드라이버 클래스명
+    password:  # 데이터베이스의 비밀번호
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect  # 스프링 부트와 하이버네이트를 함께 사용할 때 필요한 설정 항목
+        format_sql: 'true'  # 어떤 쿼리문이 실행되는지 확인하기 위함
+        show_sql: 'true'    # 어떤 쿼리문이 실행되는지 확인하기 위함
+    hibernate:
+      ddl-auto: update  # 엔티티를 기준으로 데이터의 테이블을 생성하는 규칙을 설정(설정값 종류: none, update, validate, create, create-drop)
+  application:
+    name: sbb
