@@ -31,7 +31,7 @@ public class QuestionService {
         return questionRepository.count();
     }
 
-    public Question write(String subject, String content){
+    public Question create(String subject, String content){
         Question question = Question.builder()
                 .subject(subject)
                 .content(content)
