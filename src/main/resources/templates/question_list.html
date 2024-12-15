@@ -13,8 +13,15 @@
         </thead>
         <tbody>
         <tr th:each="question, loop: ${paging}">
+<!--            게시물 번호는 question id를 표시하는게 더 나을듯? 지금이대로면 중간에 게시글 삭제하면 그 뒤 게시글들은 번호 하나씩 땡겨짐-->
             <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
-            <td><a th:href="@{|/question/detail/${question.id}|}" th:text="${question.subject}"></a></td>
+            <td>
+                <a th:href="@{|/question/detail/${question.id}|}" th:text="${question.subject}"></a>
+                <span class="text-danger small ms-2"
+                      th:if="${#lists.size(question.answerList) > 0}"
+                      th:text="|[${#lists.size(question.answerList)}]|">
+                </span>
+            </td>
             <td th:text="${#temporals.format(question.createDate, 'yyyy-MM-dd HH:mm')}"></td>
         </tr>
         </tbody>
