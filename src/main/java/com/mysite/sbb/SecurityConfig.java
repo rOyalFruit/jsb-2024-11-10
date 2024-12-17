@@ -2,6 +2,8 @@ package com.mysite.sbb;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,13 +30,29 @@ public class SecurityConfig {
                 // XFrameOptionsMode.SAMEORIGIN: 프레임에 포함된 웹 페이지가 동일한 사이트에서 제공할 때에만 사용이 허락됨.(기본값: DENY. 클릭재킹 막기 위함.)
                 .headers(headers -> headers
                         .addHeaderWriter(new XFrameOptionsHeaderWriter(
-                                XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)));
+                                XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN)))
+                //.formLogin 메서드는 스프링 시큐리티의 로그인 설정을 담당하는 부분
+                .formLogin(formLogin -> formLogin
+                        .loginPage("/user/login") // 로그인 페이지의 URL은 /user/login
+                        .defaultSuccessUrl("/")) // 로그인 성공 시에 이동할 페이지는 루트 URL(/)
+                .logout(logout -> logout
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout")) // 로그아웃 URL을 /user/logout으로 설정
+                        .logoutSuccessUrl("/") // 로그아웃이 성공하면 루트(/) 페이지로 이동
+                        .invalidateHttpSession(true)); // 로그아웃 시 생성된 사용자 세션 삭제
         return http.build();
     }
 
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+
+    // AuthenticationManager는 스프링 시큐리티의 인증을 처리
+    //사용자 인증 시 앞에서 작성한 UserSecurityService와 PasswordEncoder를 내부적으로 사용하여 인증과 권한 부여 프로세스를 처리
+    @Bean
+    AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception{
+        return authenticationConfiguration.getAuthenticationManager();
     }
 }
 
