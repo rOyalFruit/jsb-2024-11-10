@@ -113,4 +113,15 @@ public class QuestionController {
 
         return "redirect:/";
     }
+
+    //본인 질문은 추천 못하게 막기, 추천 취소 기능 추가할 것.
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/vote/{id}")
+    public String questionVote(Principal principal, @PathVariable("id") Integer id){
+        Question question = questionService.getQuestion(id);
+        SiteUser siteUser = userService.getUser(principal.getName());
+        questionService.vote(question, siteUser);
+
+        return String.format("redirect:/question/detail/%s", id);
+    }
 }

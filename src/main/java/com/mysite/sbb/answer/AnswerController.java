@@ -94,4 +94,15 @@ public class AnswerController {
 
         return String.format("redirect:/question/detail/%s", answer.getQuestion().getId());
     }
+
+    //본인 댓글은 추천 못하게 막기, 추천 취소 기능 추가할 것.
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/vote/{id}")
+    public String answerVote(Principal principal, @PathVariable("id") Integer id){
+        Answer answer = answerService.getAnswer(id);
+        SiteUser siteUser = userService.getUser(principal.getName());
+        answerService.vote(answer, siteUser);
+
+        return String.format("redirect:/question/detail/%s", answer.getQuestion().getId());
+    }
 }
