@@ -4,7 +4,9 @@
 
 <div layout:fragment="content" class="container">
     <h5 class="my-3 border-bottom pb-2">질문등록</h5>
-    <form th:action="@{/question/create}" th:object="${questionForm}" method="post">
+<!--    <form> 태그의 action 속성 없이 폼을 전송(submit)하면 action 속성이 없더라도 자동으로 현재 URL을 기준으로 전송됨.-->
+    <form th:object="${questionForm}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
         <div th:replace="~{form_errors :: formErrorsFragment}"></div>
 

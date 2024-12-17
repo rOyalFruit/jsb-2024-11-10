@@ -18,8 +18,8 @@ public class BaseInitData {
         return args -> {
             if(questionService.count() > 0) return;
 
-            Question question1 = questionService.create("제목1", "내용1");
-            Question question2 = questionService.create("제목2", "내용2");
+            Question question1 = questionService.create("제목1", "내용1", null);
+            Question question2 = questionService.create("제목2", "내용2", null);
         };
     }
 }
