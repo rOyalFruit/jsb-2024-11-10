@@ -1,0 +1,4 @@
+#application-dev.yml 이 비어있는 이유
+#application.yml 에 있는 설정이 기본적으로 개발용으로 맞춰져 있기 때문.
+#이 부분은 개발자의 취향에 맞게 설정해주면 됨.
+#어떤 개발자는 application.yml에 오직 공통설정만 넣고 application-dev.yml 에는 개발용 설정만 넣는다.
